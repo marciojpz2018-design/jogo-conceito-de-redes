@@ -1,6 +1,6 @@
 # Head Soccer Champions
 
-Jogo arcade de futebol para navegador, feito em HTML, CSS e JavaScript Canvas. Abra `index.html` diretamente ou sirva a pasta com qualquer servidor estático local.
+Jogo arcade de futebol para navegador, com campo em Canvas e jogadores 3D em Three.js. Para carregar o módulo 3D, sirva a pasta por HTTP. No Windows, execute `powershell -ExecutionPolicy Bypass -File .\serve-game.ps1` e abra `http://127.0.0.1:8000/`.
 
 ## Partida
 
