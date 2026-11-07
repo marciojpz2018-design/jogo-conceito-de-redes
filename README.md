@@ -16,4 +16,9 @@ Jogo arcade de futebol para navegador, com campo em Canvas e jogadores 3D em Thr
 - Jogador 2: `←` / `→` para mover, `↑` para pular e `Enter` para chute especial.
 - `Esc` pausa e retoma.
 
-Os nomes e as cores dos clubes são usados em uma apresentação conceitual. Os escudos são desenhos originais com abreviações, não reproduções oficiais. Não há arquivos de imagem licenciados incluídos.
+Os nomes e as cores dos clubes são usados em uma apresentação conceitual. Os escudos são desenhos originais com abreviações, não reproduções oficiais. As caricaturas de oito jogadores foram obtidas de CityPNG e são armazenadas localmente; veja assets/players/CREDITS.md e a página credits.html para as fontes e atribuições. Pelé, Ronaldinho, Zidane e Beckham mantêm a aparência original.
+
+
+## Personagens extras
+
+A seleção tem 22 opções: 12 jogadores e Chaves, Kratos, Madara, Kick Buttowski, Bob Esponja, Lula Molusco, Lula, Bolsonaro, Zé Pilintra e Professor Xavier. Os retratos são caricaturas em PNG e aparecem em campo. Xavier joga com a cadeira de rodas visível, mantendo os mesmos controles e regras. Fontes e prompts: assets/characters/CREDITS.md.

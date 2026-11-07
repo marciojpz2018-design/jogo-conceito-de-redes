@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -12,7 +12,7 @@
     <header class="topbar"><a class="brand" href="#home"><span class="brand-ball">●</span> HEAD SOCCER <b>CHAMPIONS</b></a><button id="fullscreen" class="icon-btn" aria-label="Tela cheia" title="Tela cheia">⛶</button></header>
     <section id="home" class="screen home-screen">
       <div class="hero-copy"><div class="eyebrow">FUTEBOL ARCADE • 1–2 JOGADORES</div><h1>JOGUE.<br><em>PULE.</em><br>MARQUE.</h1><p>Uma arena. Dois craques. Noventa segundos para virar lenda.</p><button class="primary" data-action="setup">JOGAR AGORA <span>→</span></button></div>
-      <div class="hero-art" aria-hidden="true"><div class="sunburst"></div><div class="hero-ball">⚽</div><div class="hero-player player-red"><div class="head">◉</div><div class="body">10</div><div class="legs"></div></div><div class="hero-player player-blue"><div class="head">◉</div><div class="body">9</div><div class="legs"></div></div><div class="hero-label">CHAMPIONS<br><small>LEAGUE</small></div></div>
+      <div class="hero-art" aria-hidden="true"><div class="sunburst"></div><div class="hero-ball">⚽</div><div class="hero-player player-red"><img class="hero-caricature" src="assets/players/messi.png" alt=""></div><div class="hero-player player-blue"><img class="hero-caricature" src="assets/players/ronaldo.png" alt=""></div><div class="hero-label">CHAMPIONS<br><small>LEAGUE</small></div></div>
       <div class="home-bottom"><span>⚡ PARTIDAS RÁPIDAS</span><span>🏆 TORNEIOS</span><span>🎮 ATÉ 2 JOGADORES</span></div>
     </section>
     <section id="setup" class="screen setup-screen hidden">
@@ -25,7 +25,7 @@
     </section>
     <section id="match" class="screen match-screen hidden"><div class="match-top"><div class="score-team"><span class="mini-crest" id="hudCrest1"></span><span id="hudName1">JOGADOR 1</span></div><div class="scoreboard"><strong id="score1">0</strong><div><span id="clock">01:30</span><small id="matchPhase">TEMPO 1</small></div><strong id="score2">0</strong></div><div class="score-team right"><span id="hudName2">JOGADOR 2</span><span class="mini-crest" id="hudCrest2"></span></div></div><div class="canvas-wrap"><canvas id="game" aria-label="Campo de futebol de cabeça"></canvas><canvas id="player3d" aria-label="Jogadores tridimensionais"></canvas><div id="goalBanner" class="goal-banner hidden">GOOOOL!</div><div id="networkQuiz" class="pause-overlay hidden"><div class="quiz-card"><div class="eyebrow">PERGUNTA DE REDES</div><h2>Qual equipamento encaminha pacotes entre redes diferentes?</h2><div class="quiz-options"><button class="secondary quiz-answer" data-correct="false">Switch</button><button class="secondary quiz-answer" data-correct="true">Roteador</button><button class="secondary quiz-answer" data-correct="false">Hub</button></div><p id="quizFeedback" aria-live="polite"></p><button id="quizContinue" class="primary hidden">CONTINUAR PARA A PARTIDA</button></div></div><div id="pauseOverlay" class="pause-overlay hidden"><h2>PAUSADO</h2><button class="primary" id="resume">CONTINUAR</button><button class="secondary" id="quitMatch">SAIR DA PARTIDA</button></div></div><div class="match-bottom"><span>◀ A D ▶ &nbsp; P1: W PULAR</span><button id="pause" class="secondary small">Ⅱ PAUSAR</button><span>P2: ← → · ↑ PULAR · ENTER CHUTE</span></div></section>
     <section id="result" class="screen result-screen hidden"><div class="eyebrow">FIM DE JOGO</div><h2 id="resultTitle">APITO FINAL</h2><div id="championCelebration" class="champion-celebration hidden"><span class="champion-trophy">🏆</span><strong>CAMPEÃO!</strong><div id="championConfetti" class="champion-confetti"></div></div><div class="result-score"><span id="resultName1"></span><strong id="resultScore">0 — 0</strong><span id="resultName2"></span></div><p id="resultMessage"></p><div class="result-actions"><button id="nextTournament" class="primary hidden">PRÓXIMA RODADA →</button><button id="rematch" class="primary">REVANCHE ↻</button><button class="secondary" data-action="setup">NOVO JOGO</button></div></section>
-    <footer><span>HEAD SOCCER CHAMPIONS</span><span>JOGO ARCADE ORIGINAL • ESCUDOS CONCEITUAIS</span></footer>
+    <footer><span>HEAD SOCCER CHAMPIONS</span><a class="art-credits" href="credits.html" target="_blank" rel="noopener">CARICATURAS: CITYPNG • CRÉDITOS</a></footer>
   </main>
   <script src="soccer.js"></script>
   <script type="module" src="player3d.js"></script>

@@ -30,6 +30,8 @@ try {
           '.js' { 'text/javascript; charset=utf-8' }
           '.css' { 'text/css; charset=utf-8' }
           '.json' { 'application/json; charset=utf-8' }
+          '.png' { 'image/png' }
+          '.svg' { 'image/svg+xml' }
           default { 'application/octet-stream' }
         }
         $body = [System.IO.File]::ReadAllBytes($file)
@@ -45,6 +47,8 @@ try {
       $stream.Write($body, 0, $body.Length)
       $stream.Flush()
       $reader.Dispose()
+    } catch [System.IO.IOException] {
+      # A browser can cancel an image request while changing screens.
     } finally {
       $client.Dispose()
     }

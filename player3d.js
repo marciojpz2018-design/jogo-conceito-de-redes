@@ -25,6 +25,31 @@ import * as THREE from './vendor/three.module.js';
   const sphere = new THREE.SphereGeometry(1, 20, 16);
   const cylinder = new THREE.CylinderGeometry(1, 1, 1, 16, 1);
   const models = new Map();
+  const headTextures = new Map();
+  const textureLoader = new THREE.TextureLoader();
+  function addCaricatureHead(root, headGroup, look) {
+    if (!look.portrait || !look.headCrop) return;
+    const install = texture => {
+      const [x, y, width, height] = look.headCrop;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.offset.set(x, 1 - y - height);
+      texture.repeat.set(width, height);
+      const face = new THREE.Mesh(
+        new THREE.PlaneGeometry(70 * width * texture.image.width / (height * texture.image.height), 70),
+        new THREE.MeshBasicMaterial({map:texture, transparent:true, alphaTest:.025, side:THREE.DoubleSide})
+      );
+      headGroup.visible = false;
+      face.position.set(0, 95, 22);
+      root.add(face);
+      root.userData.caricatureHead = face;
+    };
+    const cached = headTextures.get(look.id);
+    if (cached) install(cached);
+    else textureLoader.load(look.portrait, texture => {
+      headTextures.set(look.id, texture);
+      install(texture);
+    }, undefined, () => { /* Keep the modeled face if the artwork cannot load. */ });
+  }
 
   function ellipsoid(parent, mat, x, y, z, sx, sy, sz, geo = sphere) {
     const mesh = new THREE.Mesh(geo, mat);
@@ -61,7 +86,23 @@ import * as THREE from './vendor/three.module.js';
     return pivot;
   }
 
+  function makeWheelchairPlayer(look) {
+    const root = new THREE.Group();
+    root.userData = {leftLeg:new THREE.Group(),rightLeg:new THREE.Group(),headGroup:new THREE.Group(),shirt:material(look.c1),wheelchair:true};
+    textureLoader.load(look.portrait, texture => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const height = 144;
+      const sprite = new THREE.Mesh(
+        new THREE.PlaneGeometry(height * texture.image.width / texture.image.height, height),
+        new THREE.MeshBasicMaterial({map:texture,transparent:true,alphaTest:.025,side:THREE.DoubleSide})
+      );
+      sprite.position.set(0,height/2,22);
+      root.add(sprite);root.userData.fullBodySprite=sprite;
+    });
+    return root;
+  }
   function makePlayer(look) {
+    if (look.wheelchair) return makeWheelchairPlayer(look);
     const root = new THREE.Group();
     const shirt = material(look.c1, .5);
     const trim = material(look.c2, .5);
@@ -145,13 +186,15 @@ import * as THREE from './vendor/three.module.js';
     number.position.set(0, 53, 13.2);
     root.add(number);
     root.userData = { leftLeg, rightLeg, headGroup, hair, shirt, gold };
+    addCaricatureHead(root, headGroup, look);
     return root;
   }
 
   function syncSize() {
     const width = Math.max(1, canvas.clientWidth);
     const height = Math.max(1, canvas.clientHeight);
-    renderer.setSize(width, height, false);
+    const ratio = renderer.getPixelRatio();
+    if (canvas.width !== Math.floor(width * ratio) || canvas.height !== Math.floor(height * ratio)) renderer.setSize(width, height, false);
   }
   new ResizeObserver(syncSize).observe(canvas.parentElement);
   syncSize();
@@ -159,6 +202,7 @@ import * as THREE from './vendor/three.module.js';
   window.HeadSoccer3D = {
     ready: true,
     render(players) {
+      syncSize();
       const now = performance.now() / 1000;
       players.forEach((p, i) => {
         const id = p.appearance.id;
@@ -172,6 +216,15 @@ import * as THREE from './vendor/three.module.js';
         }
         model.position.set(p.x - 480, 260 - (p.y - 2), i * 4);
         model.rotation.y = p.facing < 0 ? -.12 : .12;
+        model.userData.shirt.color.set(p.color);
+        const fullBody = model.userData.fullBodySprite;
+        if (fullBody) { fullBody.scale.x = p.facing < 0 ? -1 : 1; fullBody.material.color.set(p.stunned > 0 ? '#9ae7ff' : '#ffffff'); }
+        const caricature = model.userData.caricatureHead;
+        if (caricature) {
+          caricature.scale.x = p.facing < 0 ? -1 : 1;
+          caricature.rotation.z = p.stunned > 0 ? Math.sin(now * 18) * .04 : Math.sin(now * 10) * Math.min(.035, Math.abs(p.vx) / 12000);
+          caricature.material.color.set(p.stunned > 0 ? '#9ae7ff' : '#ffffff');
+        }
         const run = Math.min(1, Math.abs(p.vx) / 360);
         model.userData.leftLeg.rotation.x = Math.sin(now * 12 + i) * run * .62;
         model.userData.rightLeg.rotation.x = -Math.sin(now * 12 + i) * run * .62;
